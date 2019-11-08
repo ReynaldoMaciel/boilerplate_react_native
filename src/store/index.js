@@ -9,7 +9,7 @@ const persistConfig = {
   storage: AsyncStorage,
 }
 
-const persistedReducer = persistReducer(persistConfig, reducers)
+let persistedReducer = persistReducer(persistConfig, reducers)
 
 const setupRedux = () => {
   const store = createStore(persistedReducer)
