@@ -8,10 +8,13 @@ const INITIAL_STATE = {
   codigo: 0,
   token: '',
 }
-const update = (state = INITIAL_STATE, { data }) => ({
-  ...state,
-  ...data,
-})
+const update = (state = INITIAL_STATE, { data }) => {
+  console.log(data)
+  return {
+    ...state,
+    ...data,
+  }
+}
 
 export default createReducer(INITIAL_STATE, {
   [Types.UPDATE_LOGIN]: update,

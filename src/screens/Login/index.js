@@ -6,10 +6,13 @@ import { Formik } from 'formik'
 import React, { useState } from 'react'
 import { Image, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import * as Yup from 'yup'
 import styles from './styles'
+import { LoginCreators } from 'boilerplate_app/src/store/ducks/login'
 
-export default () => {
+const Login = ({ login, updateLogin }) => {
   const [showModalError, setShowModalError] = useState(false)
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -17,6 +20,11 @@ export default () => {
       .required(),
     senha: Yup.string().required(),
   })
+  const requestLogin = async () => {
+    updateLogin({
+      token: 't=este',
+    })
+  }
   return (
     <LinearGradient
       colors={[colors.white, colors.lightblue]}
@@ -38,8 +46,8 @@ export default () => {
         </View>
         <View style={styles.containerForm}>
           <Formik
-            initialValues={{ email: '', senha: '' }}
-            onSubmit={values => console.log(values)}
+            initialValues={{ email: 'r@r.com', senha: '123qwe' }}
+            onSubmit={requestLogin}
             validationSchema={LoginSchema}
           >
             {formikProps => (
@@ -69,6 +77,7 @@ export default () => {
                 <TouchableOpacity style={styles.registerButton}>
                   <Text style={styles.registerButtonText}>Registrar</Text>
                 </TouchableOpacity>
+                <Text>{JSON.stringify(login)}</Text>
               </View>
             )}
           </Formik>
@@ -78,3 +87,20 @@ export default () => {
     </LinearGradient>
   )
 }
+
+const mapStateToProps = state => ({
+  login: state.login,
+})
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      ...LoginCreators,
+    },
+    dispatch
+  )
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login)
