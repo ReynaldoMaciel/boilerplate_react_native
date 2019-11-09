@@ -4,7 +4,14 @@ import colors from 'boilerplate_app/src/constants/colors'
 import images from 'boilerplate_app/src/constants/images'
 import { Formik } from 'formik'
 import React, { useState } from 'react'
-import { Image, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import {
+  Image,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+  KeyboardAvoidingView,
+} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -44,7 +51,10 @@ const Login = ({ login, updateLogin }) => {
             resizeMode="contain"
           />
         </View>
-        <View style={styles.containerForm}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          style={styles.containerForm}
+        >
           <Formik
             initialValues={{ email: 'r@r.com', senha: '123qwe' }}
             onSubmit={requestLogin}
@@ -77,11 +87,10 @@ const Login = ({ login, updateLogin }) => {
                 <TouchableOpacity style={styles.registerButton}>
                   <Text style={styles.registerButtonText}>Registrar</Text>
                 </TouchableOpacity>
-                <Text>{JSON.stringify(login)}</Text>
               </View>
             )}
           </Formik>
-        </View>
+        </KeyboardAvoidingView>
         <View style={styles.containerButtons}></View>
       </SafeAreaView>
     </LinearGradient>
