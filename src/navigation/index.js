@@ -1,21 +1,10 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import { createAppContainer } from 'react-navigation'
-import { createStackNavigator } from 'react-navigation-stack'
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import Login from 'boilerplate_app/src/screens/Login'
+import Register from 'boilerplate_app/src/screens/Register'
 
-class HomeScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home Screen</Text>
-      </View>
-    )
-  }
-}
-
-const AppNavigator = createStackNavigator({
+const AppNavigator = createSwitchNavigator({
   Login,
+  Register,
 })
 
 export default createAppContainer(AppNavigator)
