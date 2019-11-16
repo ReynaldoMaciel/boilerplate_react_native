@@ -19,8 +19,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as Yup from 'yup'
 import styles from './styles'
+import userService from '../../services/userService'
 
-const Login = ({ login, updateLogin }) => {
+const Login = ({ login, updateLogin, navigation }) => {
   const [showModalError, setShowModalError] = useState(false)
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -28,11 +29,17 @@ const Login = ({ login, updateLogin }) => {
       .required(),
     senha: Yup.string().required(),
   })
-  const requestLogin = async () => {
-    setShowModalError(true)
-    // updateLogin({
-    //   token: 'teste',
-    // })
+  const requestLogin = async ({ email, senha }) => {
+    try {
+      const { token } = await userService.login(email, senha)
+      updateLogin({
+        token,
+      })
+      navigation.navigate('Home')
+    } catch (error) {
+      console.log(error)
+      setShowModalError(true)
+    }
   }
   return (
     <LinearGradient
@@ -60,6 +67,7 @@ const Login = ({ login, updateLogin }) => {
           style={styles.containerForm}
         >
           <Formik
+            // initialValues={{ email: 'r@r.com', senha: '123qwe' }}
             initialValues={{ email: '', senha: '' }}
             onSubmit={requestLogin}
             validationSchema={LoginSchema}

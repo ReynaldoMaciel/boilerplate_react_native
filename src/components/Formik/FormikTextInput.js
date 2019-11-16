@@ -6,6 +6,7 @@ const FormikTextInput = ({
   handleChange,
   handleBlur,
   name,
+  placeholder,
   values,
   setFieldValue,
   secureTextEntry,
@@ -33,6 +34,7 @@ const FormikTextInput = ({
         onChangeText={mask ? beforeChangeText : handleChange(name)}
         onBlur={handleBlur(name)}
         value={values[name]}
+        placeholder={placeholder}
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType || 'default'}
       />
