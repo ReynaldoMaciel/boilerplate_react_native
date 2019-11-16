@@ -12,10 +12,12 @@ export default ({
   message,
   hideIconClose,
   onPressClose,
+  testID,
+  testIDButtonOk,
 }) => {
   return (
     <Modal useNativeDriver={true} isVisible={isVisible}>
-      <View style={styles.modalContainer}>
+      <View testID={testID} style={styles.modalContainer}>
         {!hideIconClose && (
           <View style={styles.containerIconClose}>
             <TouchableOpacity onPress={onPressClose}>
@@ -37,7 +39,9 @@ export default ({
         <Text style={styles.textTitle}>{title}</Text>
         <Text style={styles.textMessage}>{message}</Text>
         <TouchableOpacity style={styles.buttonOk} onPress={onPressClose}>
-          <Text style={styles.textButtonOk}>Entendi!</Text>
+          <Text testID={testIDButtonOk} style={styles.textButtonOk}>
+            Entendi!
+          </Text>
         </TouchableOpacity>
       </View>
     </Modal>

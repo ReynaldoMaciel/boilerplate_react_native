@@ -1,23 +1,24 @@
 import FormikTextInput from 'boilerplate_app/src/components/Formik/FormikTextInput'
+import Link from 'boilerplate_app/src/components/Link'
 import ModalError from 'boilerplate_app/src/components/Modal/ModalError'
 import colors from 'boilerplate_app/src/constants/colors'
 import images from 'boilerplate_app/src/constants/images'
+import { LoginCreators } from 'boilerplate_app/src/store/ducks/login'
 import { Formik } from 'formik'
 import React, { useState } from 'react'
 import {
   Image,
+  KeyboardAvoidingView,
   SafeAreaView,
   Text,
   TouchableOpacity,
   View,
-  KeyboardAvoidingView,
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as Yup from 'yup'
 import styles from './styles'
-import { LoginCreators } from 'boilerplate_app/src/store/ducks/login'
 
 const Login = ({ login, updateLogin }) => {
   const [showModalError, setShowModalError] = useState(false)
@@ -28,9 +29,10 @@ const Login = ({ login, updateLogin }) => {
     senha: Yup.string().required(),
   })
   const requestLogin = async () => {
-    updateLogin({
-      token: 't=este',
-    })
+    setShowModalError(true)
+    // updateLogin({
+    //   token: 'teste',
+    // })
   }
   return (
     <LinearGradient
@@ -39,6 +41,8 @@ const Login = ({ login, updateLogin }) => {
     >
       <SafeAreaView style={styles.containerSafeArea}>
         <ModalError
+          testID="modalLoginError"
+          testIDButtonOk="buttonOkModalLoginError"
           isVisible={showModalError}
           title="Ops!"
           message={`Seu cadastro não foi encontrado, \n passa no RH!`}
@@ -56,7 +60,7 @@ const Login = ({ login, updateLogin }) => {
           style={styles.containerForm}
         >
           <Formik
-            initialValues={{ email: 'r@r.com', senha: '123qwe' }}
+            initialValues={{ email: '', senha: '' }}
             onSubmit={requestLogin}
             validationSchema={LoginSchema}
           >
@@ -64,6 +68,8 @@ const Login = ({ login, updateLogin }) => {
               <View>
                 <Text style={styles.label}>Email</Text>
                 <FormikTextInput
+                  testID="emailField"
+                  testIDErrorText="emailErrorText"
                   name="email"
                   keyboardType="email-address"
                   {...formikProps}
@@ -72,6 +78,8 @@ const Login = ({ login, updateLogin }) => {
                 />
                 <Text style={styles.label}>Senha</Text>
                 <FormikTextInput
+                  testID="passwordField"
+                  testIDErrorText="passwordErrorText"
                   name="senha"
                   secureTextEntry
                   {...formikProps}
@@ -79,14 +87,19 @@ const Login = ({ login, updateLogin }) => {
                   errorStyle={{ borderBottomColor: '#FF4140' }}
                 />
                 <TouchableOpacity
+                  testID="loginButton"
                   style={styles.loginButton}
                   onPress={formikProps.handleSubmit}
                 >
                   <Text style={styles.loginButtonText}>Login</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.registerButton}>
+                <Link
+                  testID="registerButton"
+                  to="Register"
+                  style={styles.registerButton}
+                >
                   <Text style={styles.registerButtonText}>Registrar</Text>
-                </TouchableOpacity>
+                </Link>
               </View>
             )}
           </Formik>

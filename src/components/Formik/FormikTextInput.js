@@ -7,19 +7,30 @@ const FormikTextInput = ({
   handleBlur,
   name,
   values,
+  setFieldValue,
   secureTextEntry,
   keyboardType,
   touched,
   errors,
   errorStyle,
   messageErrorStyle,
+  mask,
+  testID,
+  testIDErrorText,
 }) => {
   const overrideStyle = touched[name] && errors[name] ? errorStyle : null
+  const beforeChangeText = text => {
+    if (mask) {
+      setFieldValue(name, mask(text))
+    }
+    return handleChange(name)
+  }
   return (
     <View>
       <TextInput
+        testID={testID}
         style={{ ...style, ...overrideStyle }}
-        onChangeText={handleChange(name)}
+        onChangeText={mask ? beforeChangeText : handleChange(name)}
         onBlur={handleBlur(name)}
         value={values[name]}
         secureTextEntry={secureTextEntry}
@@ -27,6 +38,7 @@ const FormikTextInput = ({
       />
       {touched[name] && errors[name] && (
         <Text
+          testID={testIDErrorText}
           style={
             messageErrorStyle || {
               fontSize: 12,
