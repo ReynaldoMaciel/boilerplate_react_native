@@ -67,8 +67,8 @@ const Login = ({ login, updateLogin, navigation }) => {
           style={styles.containerForm}
         >
           <Formik
-            // initialValues={{ email: 'r@r.com', senha: '123qwe' }}
-            initialValues={{ email: '', senha: '' }}
+            initialValues={{ email: 'r@r.com', senha: '123qwe' }}
+            // initialValues={{ email: '', senha: '' }}
             onSubmit={requestLogin}
             validationSchema={LoginSchema}
           >
