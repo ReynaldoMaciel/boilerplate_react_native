@@ -38,7 +38,7 @@ const Login = ({ updateLogin }) => {
   })
   const requestRegister = async () => {
     updateLogin({
-      token: 't=este',
+      token: 'teste',
     })
   }
   return (
