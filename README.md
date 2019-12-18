@@ -1,0 +1,1 @@
+Boilerplate made for globalsys
