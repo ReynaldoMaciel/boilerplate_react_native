@@ -36,14 +36,10 @@ const Login = ({ updateLogin, navigation }) => {
   })
   const requestLogin = async ({ email, senha }) => {
     try {
-      dispatch({ type: Types.UPDATE_LOGIN, payload: { teste: 'teste' } })
-      // const { token } = await userService.login(email, senha)
-      // updateLogin({
-      //   token,
-      // })
-      // navigation.navigate('Home')
+      const { token } = await userService.login(email, senha)
+      dispatch({ type: Types.UPDATE_LOGIN, payload: { token } })
+      navigation.navigate('Home')
     } catch (error) {
-      console.log(error)
       setShowModalError(true)
     }
   }
@@ -80,7 +76,7 @@ const Login = ({ updateLogin, navigation }) => {
           >
             {formikProps => (
               <View>
-                <Text>{JSON.stringify(login)}</Text>
+                <Text>{JSON.stringify(login.token)}</Text>
                 <Text style={styles.label}>Email</Text>
                 <FormikTextInput
                   testID="emailField"
