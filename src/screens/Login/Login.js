@@ -22,9 +22,11 @@ import userService from '../../services/userService'
 import styles from './styles'
 import { useSelector } from 'react-redux'
 import { Types } from '../../store/ducks/login'
+import Loading from '../../components/Loading'
 
 const Login = ({ updateLogin, navigation }) => {
   const [showModalError, setShowModalError] = useState(false)
+  const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
   const login = useSelector(state => state.login)
 
@@ -36,10 +38,13 @@ const Login = ({ updateLogin, navigation }) => {
   })
   const requestLogin = async ({ email, senha }) => {
     try {
+      setLoading(true)
       const { token } = await userService.login(email, senha)
+      setLoading(false)
       dispatch({ type: Types.UPDATE_LOGIN, payload: { token } })
       navigation.navigate('Home')
     } catch (error) {
+      setLoading(false)
       setShowModalError(true)
     }
   }
@@ -49,6 +54,7 @@ const Login = ({ updateLogin, navigation }) => {
       style={styles.container}
     >
       <SafeAreaView style={styles.containerSafeArea}>
+        <Loading loading={loading} text="Enviando informações" />
         <ModalError
           testID="modalLoginError"
           testIDButtonOk="buttonOkModalLoginError"
@@ -69,14 +75,13 @@ const Login = ({ updateLogin, navigation }) => {
           style={styles.containerForm}
         >
           <Formik
-            initialValues={{ email: 'r@r.com', senha: '123qwe' }}
-            // initialValues={{ email: '', senha: '' }}
+            // initialValues={{ email: 'r@r.com', senha: '123qwe' }}
+            initialValues={{ email: '', senha: '' }}
             onSubmit={requestLogin}
             validationSchema={LoginSchema}
           >
             {formikProps => (
               <View>
-                <Text>{JSON.stringify(login.token)}</Text>
                 <Text style={styles.label}>Email</Text>
                 <FormikTextInput
                   testID="emailField"
