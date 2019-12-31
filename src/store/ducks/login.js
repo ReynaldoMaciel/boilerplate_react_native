@@ -8,9 +8,9 @@ const INITIAL_STATE = {
   codigo: 0,
   token: '',
 }
-const update = (state = INITIAL_STATE, { data }) => ({
+const update = (state = INITIAL_STATE, { payload }) => ({
   ...state,
-  ...data,
+  ...payload,
 })
 
 export default createReducer(INITIAL_STATE, {
