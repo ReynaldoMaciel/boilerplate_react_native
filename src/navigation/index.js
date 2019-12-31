@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
-import Login from 'boilerplate_app/src/screens/Login'
-import Register from 'boilerplate_app/src/screens/Register'
+import Login from 'boilerplate_app/src/screens/Login/Login'
+import Register from 'boilerplate_app/src/screens/Register/Register'
 import TabNavigator from './TabNavigator'
 import NavigationService from './NavigationService'
 

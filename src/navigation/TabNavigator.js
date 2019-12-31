@@ -6,7 +6,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Octicons from 'react-native-vector-icons/Octicons'
 import { createAppContainer } from 'react-navigation'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
-import Home from '../screens/Home'
+import Home from '../screens/Home/Home'
 import colors from '../constants/colors'
 
 const initialRouteName = 'Home'
