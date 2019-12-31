@@ -15,14 +15,19 @@ import {
   View,
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as Yup from 'yup'
-import styles from './styles'
 import userService from '../../services/userService'
+import styles from './styles'
+import { useSelector } from 'react-redux'
+import { Types } from '../../store/ducks/login'
 
-const Login = ({ login, updateLogin, navigation }) => {
+const Login = ({ updateLogin, navigation }) => {
   const [showModalError, setShowModalError] = useState(false)
+  const dispatch = useDispatch()
+  const login = useSelector(state => state.login)
+
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
       .email()
@@ -31,11 +36,12 @@ const Login = ({ login, updateLogin, navigation }) => {
   })
   const requestLogin = async ({ email, senha }) => {
     try {
-      const { token } = await userService.login(email, senha)
-      updateLogin({
-        token,
-      })
-      navigation.navigate('Home')
+      dispatch({ type: Types.UPDATE_LOGIN, payload: { teste: 'teste' } })
+      // const { token } = await userService.login(email, senha)
+      // updateLogin({
+      //   token,
+      // })
+      // navigation.navigate('Home')
     } catch (error) {
       console.log(error)
       setShowModalError(true)
@@ -74,6 +80,7 @@ const Login = ({ login, updateLogin, navigation }) => {
           >
             {formikProps => (
               <View>
+                <Text>{JSON.stringify(login)}</Text>
                 <Text style={styles.label}>Email</Text>
                 <FormikTextInput
                   testID="emailField"
@@ -118,19 +125,4 @@ const Login = ({ login, updateLogin, navigation }) => {
   )
 }
 
-const mapStateToProps = state => ({
-  login: state.login,
-})
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      ...LoginCreators,
-    },
-    dispatch
-  )
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login)
+export default Login
